@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% for task in object_list %}
+
+{{task}}
+{{task.name}}
+{{task.description}}
+{{task.active}}
+
+{% empty %}
+<h2>Sorry there aren't any task</h2>
+<p><a href="">Create one! </a></p>
+{% endfor %}
+{% endblock body %}
