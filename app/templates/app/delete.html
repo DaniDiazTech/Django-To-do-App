@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Delete{% endblock title %}
+{% block body %}
+<div class="mx-auto text-center">
+    <h1 class="text-danger">Delete Task</h1>
+    <p class="my-3">You are about to delete the task "{{ task }}" </p>
+    <div class="my-3">
+        <a href="{% url 'todo-list' %}" class="btn btn-success rounded-pill">Cancel</a>
+    </div>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class="btn btn-danger rounded-pill" type="submit">Delete task</button>
+    </form>
+</div>
+{% endblock body %}

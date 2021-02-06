@@ -1,15 +1,41 @@
 {% extends 'base.html' %}
 
 {% block body %}
-{% for task in object_list %}
 
-{{task}}
-{{task.name}}
-{{task.description}}
-{{task.active}}
+<form action="" method="post">
+    {% csrf_token %}
+    {{form.name}}
+    {{form.description}}
+    <button class="btn btn-success" type="submit">Add task</button>
+</form>
 
-{% empty %}
-<h2>Sorry there aren't any task</h2>
-<p><a href="">Create one! </a></p>
-{% endfor %}
+
+<div class="">
+    {% for task in tasks %}
+
+    <div class="mx-auto text-center">
+        <span>
+            {% if task.complete %}
+            <h2><strike>{{task.name}}</strike></h2>
+            {% else %}
+            <h2>{{task.name}}</h2>
+            {% endif %}
+            <form action="{% url 'check-todo' task.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" name="complete" id="id_complete" class="form-check-input">
+            </form>
+        </span>
+        {% if task.description %}
+        <p class="text-muted">{{task.description}}</p>
+        {% endif %}
+        <a href="{% url 'update-todo' task.id %}" class="text-decoration-none btn btn-primary rounded-pill">
+            Edit</a>
+        <a href="{% url 'delete-todo' task.id %}" class="text-decoration-none btn btn-danger rounded-pill">
+            Delete</a>
+    </div>
+
+    {% empty %}
+    <h2>Create your First task!</h2>
+    {% endfor %}
+</div>
 {% endblock body %}
