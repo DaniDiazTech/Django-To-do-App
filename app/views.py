@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 
-from django.views.generic import UpdateView, DeleteView
+from django.views.generic import UpdateView, DeleteView, ListView
 
 from .models import Task
 from .forms import *
@@ -11,29 +11,35 @@ from .forms import *
 # Create your views here.
 
 
-class TodoView(View):
-    form_class = TaskForm
-    template_name = "app/index.html"
+# class TodoView(View):
+#     form_class = TaskForm
+#     template_name = "app/index.html"
 
-    def get(self, request, *args, **kwargs):
-        tasks = Task.objects.all().order_by("-created")
-        form = self.form_class
+#     def get(self, request, *args, **kwargs):
+#         tasks = Task.objects.all().order_by("-created")
+#         form = self.form_class
 
-        context = {}
-        context['form'] = form
-        context["tasks"] = tasks
+#         context = {}
+#         context['form'] = form
+#         context["tasks"] = tasks
 
-        return render(request, self.template_name, context)
+#         return render(request, self.template_name, context)
 
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            # <process form cleaned data>
-            form.save()
-            return HttpResponseRedirect(reverse('todo-list'))
+#     def post(self, request, *args, **kwargs):
+#         form = self.form_class(request.POST)
+#         if form.is_valid():
+#             # <process form cleaned data>
+#             form.save()
+#             return HttpResponseRedirect(reverse('todo-list'))
 
-        return render(request, self.template_name, {'form': form})
+#         return render(request, self.template_name, {'form': form})
 
+
+class TodoView(ListView):
+    
+
+class CompletedTasks(ListView):
+    pass
 
 class TaskUpdateView(UpdateView):
     model = Task

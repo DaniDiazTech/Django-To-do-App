@@ -2,12 +2,21 @@
 
 {% block body %}
 
-<form action="" method="post">
+
+<form action="" method="POST">
     {% csrf_token %}
-    {{form.name}}
-    {{form.description}}
-    <button class="btn btn-success" type="submit">Add task</button>
+    <div class="row g-2">
+
+        <div class="col-10">
+            {{form.name}}
+        </div>
+        <div class="col-2">
+            <button class="btn btn-success btn-lg w-100" type="submit">Add</button>
+        </div>
+    </div>
 </form>
+
+
 
 
 <div class="">
@@ -20,10 +29,6 @@
             {% else %}
             <h2>{{task.name}}</h2>
             {% endif %}
-            <form action="{% url 'check-todo' task.id %}" method="post">
-                {% csrf_token %}
-                <input type="submit" name="complete" id="id_complete" class="form-check-input">
-            </form>
         </span>
         {% if task.description %}
         <p class="text-muted">{{task.description}}</p>
