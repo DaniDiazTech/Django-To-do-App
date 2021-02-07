@@ -10,3 +10,6 @@ class Task(models.Model):
 
     def __str__(self):
         return f"{str(self.name)}"
+    
+    def count(self):
+        return self.objects.all().count()

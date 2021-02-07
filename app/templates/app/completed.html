@@ -22,28 +22,28 @@
         </form>
     </div>
     <div class="mx-auto text-center">
-        <p class="text-muted"><a href="{% url 'todo-completed' %}" class="text-decoration-none text-black-50">Let's see my <span
-                    class="link-primary">completed tasks</a>
+        <p class="text-muted"><a href="{% url 'todo-list' %}" class="text-decoration-none text-black-50">Let's see my <span
+                    class="link-primary">my current tasks</span> </a>
         </p>
     </div>
     <div class="px-3 my-3">
-        <h4 class="bg-primary text-light py-2 rounded text-center">My Tasks:</h4>
+        <h4 class="bg-primary text-light py-2 rounded text-center">My completed Tasks:</h4>
     </div>
 
     <div class="card-body">
         {% for task in tasks %}
-        <ul class="list-group list-group-flush mb-3">
+        <ul class="list-group list-group-flush">
             <li class="list-group-item"><span>
 
                     <div class="float-end">
                         <a href="{% url 'update-todo' task.id %}"
-                            class="text-decoration-none btn btn-primary rounded-pill ">
+                            class="text-decoration-none btn btn-primary rounded-pill">
                             Edit</a>
                         <a href="{% url 'delete-todo' task.id %}"
                             class="text-decoration-none btn btn-danger rounded-pill">
                             Delete</a>
                     </div>
-                    <h2>{{task.name}}</h2>
+                    <h2><strike>{{task.name}}</strike></h2>
                 </span>
                 {% if task.description %}
                 <p class="text-muted">{{task.description}}</p>
@@ -52,13 +52,14 @@
 
 
             {% empty %}
-            <li class="list-group-item">
-                <h2>Create your First task!</h2>
+            <li class="list-group-item list-group-flush">
+                <h2>You haven't completed any tasks yet <i class="fas fa-sad-tear px-2"></i> </h2>
             </li>
             {% endfor %}
         </ul>
 
     </div>
+
 </div>
 
 {% include "app/pagination.html" %}

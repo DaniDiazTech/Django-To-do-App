@@ -41,7 +41,7 @@ class TodoView(ListView):
     
 
     def get_queryset(self):
-        return Task.objects.all().order_by('-created')
+        return Task.objects.filter(complete=False).order_by('-created')
     
     def post(self, request, *args, **kwargs):
         form = TaskForm(request.POST)
@@ -53,8 +53,30 @@ class TodoView(ListView):
         return render(request, self.template_name, {'form': form})
 
 
-class CompletedTasks(ListView):
-    pass
+class CompletedTodo(ListView):
+    model = Task
+    template_name = "app/completed.html"
+    context_object_name = 'tasks'
+
+    paginate_by = 6
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = TaskForm
+        return context
+    
+    def get_queryset(self):
+        return Task.objects.filter(complete=True).order_by('-created')
+    
+    def post(self, request, *args, **kwargs):
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            # <process form cleaned data>
+            form.save()
+            return HttpResponseRedirect(reverse('todo-list'))
+
+        return render(request, self.template_name, {'form': form})
+
 
 
 class TaskUpdateView(UpdateView):

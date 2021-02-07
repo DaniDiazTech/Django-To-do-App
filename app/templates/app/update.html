@@ -2,12 +2,27 @@
 {% block title %}Edit todo{% endblock title %}
 
 {% block body %}
-<h1>Edit Task</h1>
+<div class="card my-4">
+    <div class="card-header">
+        <div class="mx-auto text-center my-3">
+            <h1 class="fw-bold">Edit Todo</h1>
+        </div>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+                <div class="input-group-text" data-toggle="tooltip" data-placement="bottom" title="Marked as completed">
+                    {{form.complete}}
+                </div>
+                {{form.name}}
+            </div>
+            <div class="input-group mb-3">
+                {{form.description}}
+            </div>
+            <button type="submit" class="btn btn-md btn-success">Edit</button>
+        </form>
+    </div>
 
-<form action="" method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button class="btn btn-success" type="submit">Edit task</button>
-</form>
 
-{% endblock body %}
+    {% endblock body %}
