@@ -3,44 +3,57 @@
 {% block body %}
 
 
-<form action="" method="POST">
-    {% csrf_token %}
-    <div class="row g-2">
 
-        <div class="col-10">
-            {{form.name}}
-        </div>
-        <div class="col-2">
-            <button class="btn btn-success btn-lg w-100" type="submit">Add</button>
-        </div>
+<div class="card mt-5">
+    <div class="card-header text-center">
+        <h1>Todo App</h1>
     </div>
-</form>
+    <div class="px-3 py-3">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="row g-1">
 
+                <div class="col-10">
+                    {{form.name}}
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-success btn-lg w-100" type="submit"><i
+                            class="fas fa-plus-circle"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="px-3">
+        <h4 class="bg-primary text-light py-2 rounded text-center">My Tasks:</h4>
+    </div>
 
+    <div class="">
+        {% for task in tasks %}
 
-
-<div class="">
-    {% for task in tasks %}
-
-    <div class="mx-auto text-center">
-        <span>
-            {% if task.complete %}
-            <h2><strike>{{task.name}}</strike></h2>
-            {% else %}
-            <h2>{{task.name}}</h2>
+        <div class="mx-auto text-center">
+            <span>
+                {% if task.complete %}
+                <h2><strike>{{task.name}}</strike></h2>
+                {% else %}
+                <h2>{{task.name}}</h2>
+                {% endif %}
+            </span>
+            {% if task.description %}
+            <p class="text-muted">{{task.description}}</p>
             {% endif %}
-        </span>
-        {% if task.description %}
-        <p class="text-muted">{{task.description}}</p>
-        {% endif %}
-        <a href="{% url 'update-todo' task.id %}" class="text-decoration-none btn btn-primary rounded-pill">
-            Edit</a>
-        <a href="{% url 'delete-todo' task.id %}" class="text-decoration-none btn btn-danger rounded-pill">
-            Delete</a>
+            <a href="{% url 'update-todo' task.id %}" class="text-decoration-none btn btn-primary rounded-pill">
+                Edit</a>
+            <a href="{% url 'delete-todo' task.id %}" class="text-decoration-none btn btn-danger rounded-pill">
+                Delete</a>
+        </div>
+
+        {% empty %}
+        <h2>Create your First task!</h2>
+        {% endfor %}
     </div>
 
-    {% empty %}
-    <h2>Create your First task!</h2>
-    {% endfor %}
 </div>
+
+
+
 {% endblock body %}

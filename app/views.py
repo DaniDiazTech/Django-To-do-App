@@ -25,21 +25,37 @@ from .forms import *
 
 #         return render(request, self.template_name, context)
 
-#     def post(self, request, *args, **kwargs):
-#         form = self.form_class(request.POST)
-#         if form.is_valid():
-#             # <process form cleaned data>
-#             form.save()
-#             return HttpResponseRedirect(reverse('todo-list'))
-
-#         return render(request, self.template_name, {'form': form})
 
 
 class TodoView(ListView):
+    model = Task
+    template_name = "app/index.html"
+    context_object_name = 'tasks'
+
+    paginate_by = 6
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = TaskForm
+        return context
     
+
+    def get_queryset(self):
+        return Task.objects.all().order_by('-created')
+    
+    def post(self, request, *args, **kwargs):
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            # <process form cleaned data>
+            form.save()
+            return HttpResponseRedirect(reverse('todo-list'))
+
+        return render(request, self.template_name, {'form': form})
+
 
 class CompletedTasks(ListView):
     pass
+
 
 class TaskUpdateView(UpdateView):
     model = Task

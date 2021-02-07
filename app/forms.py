@@ -6,7 +6,7 @@ from .models import Task
 
 class TaskForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(
-        attrs={"class": "form-control form-control-lg", "placeholder": "The title of the task"}))
+        attrs={"class": "form-control form-control-lg", "placeholder": "Task title"}))
 
     class Meta:
         model = Task
@@ -20,7 +20,7 @@ class TaskUpdateForm(forms.ModelForm):
     description = forms.CharField(required=False, widget=forms.Textarea(
         attrs={"class": "form-control ", "placeholder": "The Description of the task"}))
 
-    complete = forms.CharField(widget=forms.CheckboxInput(
+    complete = forms.CharField(required=False, widget=forms.CheckboxInput(
         attrs={"class": "form-check-input"}))
 
     class Meta:
